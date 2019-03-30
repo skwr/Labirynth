@@ -10,11 +10,11 @@ public class CameraController : MonoBehaviour
     [Range(0.1f, 0.5f)]
     float movementSmooth = 0.1f;
 
-    CircleCollider2D col;
-    Camera cam;
+    CircleCollider2D col;       //instance of collider for seting size of collider; collider is use by cells to detect that they are colide
+    
 
     [SerializeField]
-    [Range(-10, 10)]
+    [Range(-100, 100)]
     float colMargin = 0;
 
     // Start is called before the first frame update
@@ -23,8 +23,6 @@ public class CameraController : MonoBehaviour
         targerLocation = transform.position;
         gameObject.AddComponent(typeof(CircleCollider2D));
         col = GetComponent<CircleCollider2D>();
-
-        cam = GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -32,11 +30,15 @@ public class CameraController : MonoBehaviour
     {
         float posX = transform.position.x;
         float posY = transform.position.y;
-        targerLocation = new Vector3(Mathf.Lerp(posX, targerLocation.x, movementSmooth), Mathf.Lerp(posY, targerLocation.y, movementSmooth));
 
-        col.radius = GetComponent<CameraGizmos>().size + colMargin;
+        //moveing camera to new position using Linear Interpolation
+        transform.position = new Vector3(Mathf.Lerp(posX, targerLocation.x, movementSmooth), Mathf.Lerp(posY, targerLocation.y, movementSmooth), -10);
+
+        //updating size of collider based on margin percentage
+        col.radius = GetComponent<CameraGizmos>().size + (colMargin * GetComponent<CameraGizmos>().size)/100;
     }
 
+    //public method to call from outside
     public void SetNewTargetLocation(Vector2 newLocation)
     {
         targerLocation = newLocation;

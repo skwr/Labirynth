@@ -40,4 +40,6 @@ public class LabirynthCell
         return cellStatus;
     }
 
+    
+
 }

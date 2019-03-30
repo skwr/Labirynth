@@ -66,6 +66,7 @@
     <Compile Include="Assets\Master Scripts\CameraController.cs" />
     <Compile Include="Assets\Master Scripts\CameraGizmos.cs" />
     <Compile Include="Assets\Master Scripts\GameMaster.cs" />
+    <Compile Include="Assets\Player\PlayerCamera.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Julek/Documents/projekty Unity/Labirynth/Labirynth/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

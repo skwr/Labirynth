@@ -7,31 +7,31 @@ public class Cell : MonoBehaviour
     public LabirynthCell.STATUS status;
 
     [SerializeField]
-    LayerMask camLayerMask;
+    LayerMask camLayerMask;     //mask to cutout detecting smfg different than camera
 
     [SerializeField]
-    bool gizmosAllTheTime = false;
+    bool gizmosAllTheTime = false;      //variable to switch if gizmos should draw all the time or only when object is selected
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("born!");
-        //gameObject.AddComponent(typeof(BoxCollider2D));
-
-        
+        Debug.Log("born!");        
     }
 
     // Update is called once per frame
     void Update()
     {
+        //checking if cell collides with camera collider
         Collider2D cam = Physics2D.OverlapBox(transform.position, transform.localScale - new Vector3(0.3f, 0.3f, 0), 0, camLayerMask);
+
+        //switch visibility of cell depends on collides
         if(cam)
         {
-            status = LabirynthCell.STATUS.WALL;
+            GetComponentInChildren<Renderer>().enabled = true;
         }
         else
         {
-            status = LabirynthCell.STATUS.EMPTY;
+            GetComponentInChildren<Renderer>().enabled = false;
         }
     }
 

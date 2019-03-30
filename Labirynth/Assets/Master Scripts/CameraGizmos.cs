@@ -14,8 +14,8 @@ public class CameraGizmos : MonoBehaviour
     public float size;
 
     [SerializeField]
-    [Range(0, 100)]
-    float scaling = 0;
+    [Range(100, 0)]
+    float scaling = 100;  //
 
     
 
@@ -24,15 +24,10 @@ public class CameraGizmos : MonoBehaviour
 
     private void Update()
     {
-        size = GetComponent<Camera>().orthographicSize - ((scaling * GetComponent<Camera>().orthographicSize) / 100);
-
-        
+        size = GetComponent<Camera>().orthographicSize * (scaling / 100);       //seting size of camera FOV circle
     }
 
-
-
-
-
+    
     private void OnDrawGizmosSelected()
     {
         
