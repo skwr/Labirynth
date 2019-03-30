@@ -63,6 +63,8 @@
     <Compile Include="Assets\Labirynth generator\Cell.cs" />
     <Compile Include="Assets\Labirynth generator\LabirynthCell.cs" />
     <Compile Include="Assets\Labirynth generator\LabirynthGenerator.cs" />
+    <Compile Include="Assets\Master Scripts\CameraController.cs" />
+    <Compile Include="Assets\Master Scripts\CameraGizmos.cs" />
     <Compile Include="Assets\Master Scripts\GameMaster.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Julek/Documents/projekty Unity/Labirynth/Labirynth/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

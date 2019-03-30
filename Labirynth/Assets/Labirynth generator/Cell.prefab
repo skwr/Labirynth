@@ -43,3 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35bff55d540910e4a80e7d82c02e3de3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  status: 0
+  camLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  gizmosAllTheTime: 1

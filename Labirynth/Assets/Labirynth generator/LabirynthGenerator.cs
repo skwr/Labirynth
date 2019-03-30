@@ -19,6 +19,9 @@ public class LabirynthGenerator
 
     public bool done = false;
 
+    [SerializeField]
+    CameraController cameraObject;
+
     //constructors
     //////////////////////////////////////////////////////////////////////
     public LabirynthGenerator(int _width, int _height, Vector2 cursorStart)
@@ -45,7 +48,7 @@ public class LabirynthGenerator
         switch (generatorType)
         {
             case GENERATOR.STANDARD:
-                cellSize = 3;
+                cellSize = 1;
                 break;
         }
 
@@ -55,6 +58,7 @@ public class LabirynthGenerator
 
     private void Generating()
     {
+        Debug.Log("generating...");
         if(labirynthGrid != null)
         {
             //filling grid with LabirynthCell objects
