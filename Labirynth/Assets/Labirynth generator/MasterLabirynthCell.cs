@@ -9,4 +9,6 @@ public class MasterLabirynthCell : LabirynthCell
         position = _position;
         cellType = _type;
     }
+
+    
 }
