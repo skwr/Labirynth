@@ -16,26 +16,26 @@ public class MasterLabirynth : LabirynthSpawner
     {
         //get size from somewhere
         
-        IntVector2 s = new IntVector2(30, 30);
         
+
+        
+    }
+
+    public override bool Begin(int seed, IntVector2 size, float sizeMultiplier)
+    {
+
+        IntVector2 s = size;
+
         if (s.x % 2 == 0) s.x++;
         if (s.y % 2 == 0) s.y++;
 
         gridSize = s;
 
-        
-    }
 
-    public override bool Begin()
-    {
-        
-        
-        
-
-        if(base.Begin())
+        if (base.Begin(seed, gridSize, sizeMultiplier))
         {
             generator = new MasterLabirynthGenerator(gridSize, this);
-            generator.Generate(1125);
+            generator.Generate(seed, MasterLabirynthGenerator.GENERATOR_TYPE.MINOR);
             return true;
         }
         else
@@ -51,22 +51,6 @@ public class MasterLabirynth : LabirynthSpawner
     void Update()
     {
         
-       /* bool stoped = base.Begin();
-
-        if(!locker)
-        {
-            if (!stoped)
-            {
-                
-            }
-            else
-            {
-                Debug.Log("Generator stopped...");
-            }
-        }
-        */
-        
-
         base.Update();
     }
 }

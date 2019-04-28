@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LabirynthSpawner : MonoBehaviour
 {
     [SerializeField]
-    GameObject prefab;
+    List<GameObject> prefab;
 
     public List<LabirynthCell> spawnQueue { get; private set; } = new List<LabirynthCell>();
     public List<LabirynthCell> updateQueue { get; private set; } = new List<LabirynthCell>();
@@ -15,22 +15,26 @@ public class LabirynthSpawner : MonoBehaviour
 
     GameObject[,] grid;
 
-    
-    
+
+
     // Start is called before the first frame update
-    virtual public void Start()
+    /*virtual public void Start()
     {
         grid = new GameObject[gridSize.x, gridSize.y];
         Debug.Log("tworzenie grid");
         
-    }
+    }*/
 
-    virtual public bool Begin()
+    float sizeMultiplier;
+
+    virtual public bool Begin(int seed, IntVector2 size, float _sizeMiltiplier)
     {
         if (started) return false;
+        sizeMultiplier = _sizeMiltiplier;
         started = true;
         grid = new GameObject[gridSize.x, gridSize.y];
         Debug.Log("tworzenie grid");
+        transform.localScale *= _sizeMiltiplier;
         return true;
     }
 
@@ -58,13 +62,40 @@ public class LabirynthSpawner : MonoBehaviour
 
             spawnQueue.RemoveAt(0);
 
-           // Debug.Log("spawning: " + cellToSpawn.cellType.ToString());
-            GameObject cell = (GameObject)Instantiate(prefab, new Vector3(cellToSpawn.position.x, cellToSpawn.position.y, 0), Quaternion.Euler(0, 0, 0));
-            //cell.GetComponentInChildren<CellObject>().SetCellType(CellObject.CELL_TYPE.WALL);
+            GameObject cell;
 
+            switch(cellToSpawn.cellType)
+            {
+                case LabirynthCell.CELL_TYPE.EMPTY:
+                    cell = (GameObject)Instantiate(prefab[0], new Vector3(cellToSpawn.position.x + transform.position.x, cellToSpawn.position.y + transform.position.y, 0), Quaternion.Euler(0, 0, 0), transform);
+                    cell.GetComponent<CellObject>().SetCellType(CellObject.CELL_TYPE.EMPTY);
+                    break;
+                case LabirynthCell.CELL_TYPE.OBSTICLE:
+                    cell = (GameObject)Instantiate(prefab[0], new Vector3(cellToSpawn.position.x + transform.position.x, cellToSpawn.position.y + transform.position.y, 0), Quaternion.Euler(0, 0, 0), transform);
+                    cell.GetComponent<CellObject>().SetCellType(CellObject.CELL_TYPE.WALL);
+                    break;
+                case LabirynthCell.CELL_TYPE.WALKED:
+                    cell = (GameObject)Instantiate(prefab[0], new Vector3(cellToSpawn.position.x + transform.position.x, cellToSpawn.position.y + transform.position.y, 0), Quaternion.Euler(0, 0, 0), transform);
+                    cell.GetComponent<CellObject>().SetCellType(CellObject.CELL_TYPE.PATH);
+                    break;
+                case LabirynthCell.CELL_TYPE.WALL:
+                    cell = (GameObject)Instantiate(prefab[0], new Vector3(cellToSpawn.position.x + transform.position.x, cellToSpawn.position.y + transform.position.y, 0), Quaternion.Euler(0, 0, 0), transform);
+                    cell.GetComponent<CellObject>().SetCellType(CellObject.CELL_TYPE.WALL);
+                    break;
+                case LabirynthCell.CELL_TYPE.LABIRYNTH:
+                    float multiplier = 0.1f;
+                    cell = (GameObject)Instantiate(prefab[1], new Vector3(cellToSpawn.position.x + transform.position.x, cellToSpawn.position.y + transform.position.y, 0), Quaternion.Euler(0, 0, 0), transform);
+                    cell.GetComponent<MasterLabirynth>().Begin(233, new IntVector2(10, 10), multiplier);
+                    
+                    break;
+                default:
+                    cell = (GameObject)Instantiate(prefab[0], new Vector3(cellToSpawn.position.x + transform.position.x, cellToSpawn.position.y + transform.position.y, 0), Quaternion.Euler(0, 0, 0), transform);
+                    cell.GetComponent<CellObject>().SetCellType(CellObject.CELL_TYPE.EMPTY);
+                    break;
+            }
             
             grid[cellToSpawn.position.x, cellToSpawn.position.y] = cell;
-
+            
             spawnCooldown = 0.2f;
             spawnDone = true;
             
@@ -117,9 +148,16 @@ public class LabirynthSpawner : MonoBehaviour
         
     }
 
-    public void SpawnLabirynthObject(MasterLabirynthCell cell)
+    public void SpawnLabirynthObject(MasterLabirynthCell[,] cell)
     {
-        spawnQueue.Add(cell);
+        for(int y = 0; y < gridSize.y; y++)
+        {
+            for(int x = 0; x < gridSize.x; x++)
+            {
+                spawnQueue.Add(cell[x, y]);
+            }
+        }
+        
         //Debug.Log("adding to spawn queue");
     }
 

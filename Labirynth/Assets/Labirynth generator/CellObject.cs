@@ -4,40 +4,61 @@ using UnityEngine;
 
 public class CellObject : MonoBehaviour
 {
-    public enum CELL_TYPE { WALL, BREAKABLEWALL, PATH};
+    public enum CELL_TYPE { WALL, BREAKABLEWALL, PATH, EMPTY, LABIRYNTH };
 
+    [SerializeField]
     CELL_TYPE cellType;
 
-    private bool refreash = false;
+    [SerializeField]
+    List<Sprite> visibleSprites;
+    [SerializeField]
+    List<Sprite> unvisibleSprites;
+
+    [SerializeField]
+    GameObject generatorPrefab;
+
+    
+
 
     private void Update()
     {
-        if(refreash)
-        {
-            //odpowiednia zmiana rodzaju i wyswietlenie go
-
-            switch (cellType)
-            {
-                case CELL_TYPE.WALL:
-                    GetComponentInParent<MeshRenderer>().enabled = true;
-                    break;
-                case CELL_TYPE.BREAKABLEWALL:
-                    GetComponentInParent<MeshRenderer>().enabled = true;
-                    break;
-                case CELL_TYPE.PATH:
-                    GetComponentInParent<MeshRenderer>().enabled = false;
-                    break;
-            }
-
-            refreash = false;
-        }
+        
     }
 
 
     public void SetCellType(CELL_TYPE type)
     {
         cellType = type;
-        refreash = true;
+
+        SpriteRenderer rendererVisible = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        SpriteRenderer rendererUnvisible = transform.GetChild(1).GetComponent<SpriteRenderer>();
+
+        switch (cellType)
+        {
+            case CELL_TYPE.WALL:
+                rendererVisible.sprite = visibleSprites[0];
+                rendererUnvisible.sprite = unvisibleSprites[0];
+                break;
+            case CELL_TYPE.BREAKABLEWALL:
+                rendererVisible.sprite = visibleSprites[0];
+                rendererUnvisible.sprite = unvisibleSprites[0];
+                break;
+            case CELL_TYPE.PATH:
+                rendererVisible.sprite = null;
+                rendererUnvisible.sprite = unvisibleSprites[0];
+                break;
+            case CELL_TYPE.EMPTY:
+                rendererVisible.sprite = null;
+                rendererUnvisible.sprite = unvisibleSprites[0];
+                break;
+            case CELL_TYPE.LABIRYNTH:
+                rendererVisible.sprite = null;
+                rendererUnvisible.sprite = null;
+
+                //spawn generator
+
+                break;
+        }
     }
 
 

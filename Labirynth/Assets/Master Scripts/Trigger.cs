@@ -5,7 +5,7 @@ using UnityEngine;
 public class Trigger : MonoBehaviour
 {
     [SerializeField]
-    MasterLabirynth generator;
+    List<MasterLabirynth> generators;
 
     // Start is called before the first frame update
     void Start()
@@ -18,11 +18,16 @@ public class Trigger : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            if(generator)
+            for (int i = 0; i < generators.Count; i++)
+            if(generators[i])
             {
-                if(generator.Begin())
+                    System.DateTime now = System.DateTime.Now;
+
+                    int seed = now.Year + now.Month + now.Day + now.Hour + now.Minute + now.Second + now.Millisecond + now.DayOfYear;
+
+                if(generators[i].Begin(seed, new IntVector2(10, 10), 1))
                 {
-                    Debug.Log("generator started");
+                    Debug.Log("generator " + i + " started");
                 }
                 else
                 {

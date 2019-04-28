@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class LabirynthCell
 {
-    public enum CELL_TYPE { OBSTICLE, WALL, EMPTY, WALKED };
+    public enum CELL_TYPE { OBSTICLE, WALL, EMPTY, WALKED, LABIRYNTH };
     public IntVector2 position { get; protected set; }
 
     public CELL_TYPE cellType { get;  set; }
+
+    
 
     public LabirynthCell()
     {
