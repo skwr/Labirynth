@@ -67,7 +67,7 @@ public class LabirynthSpawner : MonoBehaviour
             switch(cellToSpawn.cellType)
             {
                 case LabirynthCell.CELL_TYPE.EMPTY:
-                    cell = (GameObject)Instantiate(prefab[0], new Vector3(cellToSpawn.position.x + transform.position.x, cellToSpawn.position.y + transform.position.y, 0), Quaternion.Euler(0, 0, 0), transform);
+                    cell = (GameObject)Instantiate(prefab[0], new Vector3(cellToSpawn.position.x + transform.position.x * sizeMultiplier, cellToSpawn.position.y + transform.position.y * sizeMultiplier, 0), Quaternion.Euler(0, 0, 0), transform);
                     cell.GetComponent<CellObject>().SetCellType(CellObject.CELL_TYPE.EMPTY);
                     break;
                 case LabirynthCell.CELL_TYPE.OBSTICLE:
@@ -75,17 +75,18 @@ public class LabirynthSpawner : MonoBehaviour
                     cell.GetComponent<CellObject>().SetCellType(CellObject.CELL_TYPE.WALL);
                     break;
                 case LabirynthCell.CELL_TYPE.WALKED:
-                    cell = (GameObject)Instantiate(prefab[0], new Vector3(cellToSpawn.position.x + transform.position.x, cellToSpawn.position.y + transform.position.y, 0), Quaternion.Euler(0, 0, 0), transform);
+                    cell = (GameObject)Instantiate(prefab[0], new Vector3(cellToSpawn.position.x + transform.position.x * sizeMultiplier, cellToSpawn.position.y + transform.position.y * sizeMultiplier, 0), Quaternion.Euler(0, 0, 0), transform);
                     cell.GetComponent<CellObject>().SetCellType(CellObject.CELL_TYPE.PATH);
                     break;
                 case LabirynthCell.CELL_TYPE.WALL:
-                    cell = (GameObject)Instantiate(prefab[0], new Vector3(cellToSpawn.position.x + transform.position.x, cellToSpawn.position.y + transform.position.y, 0), Quaternion.Euler(0, 0, 0), transform);
+                    cell = (GameObject)Instantiate(prefab[0], new Vector3(cellToSpawn.position.x + transform.position.x * sizeMultiplier, cellToSpawn.position.y + transform.position.y * sizeMultiplier, 0), Quaternion.Euler(0, 0, 0), transform);
                     cell.GetComponent<CellObject>().SetCellType(CellObject.CELL_TYPE.WALL);
                     break;
                 case LabirynthCell.CELL_TYPE.LABIRYNTH:
-                    float multiplier = 0.1f;
-                    cell = (GameObject)Instantiate(prefab[1], new Vector3(cellToSpawn.position.x + transform.position.x, cellToSpawn.position.y + transform.position.y, 0), Quaternion.Euler(0, 0, 0), transform);
-                    cell.GetComponent<MasterLabirynth>().Begin(233, new IntVector2(10, 10), multiplier);
+                    
+                    cell = (GameObject)Instantiate(prefab[1], new Vector3((cellToSpawn.position.x + transform.position.x) - 0.5f, (cellToSpawn.position.y + transform.position.y) - 0.5f, 0), Quaternion.Euler(0, 0, 0), transform);
+                    cell.GetComponent<MasterLabirynth>().Begin(233, new IntVector2(10, 10), 0.1f);
+                    
                     
                     break;
                 default:
