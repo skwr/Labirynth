@@ -22,7 +22,11 @@ public class MinorCellObject : RebuildCellObject
         //initializing minor object
         //
 
-        size = new Vector3(_minorSize, _minorSize);
+        minorSize = _minorSize;
+
+        
+
+        size = new Vector3(minorSize, minorSize);
         type = _type;
 
         switch (type)
@@ -41,5 +45,10 @@ public class MinorCellObject : RebuildCellObject
                 thisRenderer.sprite = sprites[0];
                 break;
         }
+    }
+
+    private void Update()
+    {
+        size = new Vector3(minorSize * transform.parent.transform.parent.transform.localScale.x, minorSize * transform.parent.transform.parent.transform.localScale.y);
     }
 }

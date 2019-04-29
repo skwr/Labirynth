@@ -34,14 +34,23 @@ public class MajorCellObject : RebuildCellObject
 
     IntVector2 cursor;  //variable to hold position of current generator step
 
-    
+    [HideInInspector]
+    public int L, T, R, B;
 
-    public void Initialize(int MinorDimension, float MinorSize, float MajorSize, MajorCell.CELL_TYPE type)
+
+
+    public void Initialize(int MinorDimension, float MinorSize, float MajorSize, MajorCell.CELL_TYPE type, int _L, int _T, int _R, int _B)
     {
+        L = _L;
+        T = _T;
+        R = _R;
+        B = _B;
+
         //initialize this object generator
         //creating its own labirynth
 
         
+
         minorSize = MinorSize;
         minorDimension = MinorDimension;
         majorSize = MajorSize;
@@ -151,13 +160,39 @@ public class MajorCellObject : RebuildCellObject
             walkedCells.Add(neighbours[randomNeighbour]);
             minorLabirynthGrid[neighbours[randomNeighbour].position.x, neighbours[randomNeighbour].position.y].type = MajorCell.CELL_TYPE.PATH;
 
+            
+                
+
             //changing object omitted on generator step
             IntVector2 w = new IntVector2((cursor.x + neighbours[randomNeighbour].position.x) / 2, (cursor.y + neighbours[randomNeighbour].position.y) / 2);
             minorLabirynthGrid[w.x, w.y].type = MajorCell.CELL_TYPE.PATH;
 
+            
+
             //"timeout" variable decrising
             c--;
 
+        }
+
+        Debug.Log(L + " " + T + " " + R + " " + B);
+        if(L > 0)
+        {
+            minorLabirynthGrid[0, L].type = MajorCell.CELL_TYPE.PATH;
+        }
+
+        if (T > 0)
+        {
+            minorLabirynthGrid[T, minorDimension - 1].type = MajorCell.CELL_TYPE.PATH;
+        }
+
+        if (R > 0)
+        {
+            minorLabirynthGrid[minorDimension - 1, R].type = MajorCell.CELL_TYPE.PATH;
+        }
+
+        if (B > 0)
+        {
+            minorLabirynthGrid[B, 0].type = MajorCell.CELL_TYPE.PATH;
         }
 
 
@@ -215,6 +250,8 @@ public class MajorCellObject : RebuildCellObject
             Spawn();
             generatingDone = false;
         }
+
+        size = new Vector3(majorSize * transform.parent.transform.localScale.x, majorSize * transform.parent.transform.localScale.y, 0);
     }
 
     //spawning gameObjects of labirynth elements
@@ -236,4 +273,6 @@ public class MajorCellObject : RebuildCellObject
             }
         }
     }
+
+
 }

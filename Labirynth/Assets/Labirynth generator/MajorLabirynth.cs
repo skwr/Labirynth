@@ -123,24 +123,96 @@ public class MajorLabirynth : MonoBehaviour
             //get all neighbours of spot that is pointed by curosr
             List<MajorCell> neighbours = GetNeighbours(cursor);
 
+            List<MajorCell> neighboursForRandomSelect = new List<MajorCell>();
+            for (int i = 0; i < neighbours.Count; i++)
+            {
+                if (neighbours[i] == null) continue;
+                neighboursForRandomSelect.Add(neighbours[i]);
+            }
+
+            
+
 
             //remove this spot form walked if it haven`t got any neighbour
-            if (neighbours.Count <= 0)
+            if (neighboursForRandomSelect.Count <= 0)
             {
                 walkedCells.RemoveAt(randomWalked);
                 continue;
             }
 
             //get random neighbour index from list
-            int randomNeighbour = randomNumbersGenerator.GetRandomNumber(0, neighbours.Count);
+            int randomNeighbour = randomNumbersGenerator.GetRandomNumber(0, neighboursForRandomSelect.Count);
 
             //inserting selected neighbour int
-            walkedCells.Add(neighbours[randomNeighbour]);
-            majorLabirynthGrid[neighbours[randomNeighbour].position.x, neighbours[randomNeighbour].position.y].type = MajorCell.CELL_TYPE.PATH;
+            walkedCells.Add(neighboursForRandomSelect[randomNeighbour]);
+            majorLabirynthGrid[neighboursForRandomSelect[randomNeighbour].position.x, neighboursForRandomSelect[randomNeighbour].position.y].type = MajorCell.CELL_TYPE.PATH;
 
             //changing object omitted on generator step
-            IntVector2 w = new IntVector2((cursor.x + neighbours[randomNeighbour].position.x) / 2, (cursor.y + neighbours[randomNeighbour].position.y) / 2);
+            IntVector2 w = new IntVector2((cursor.x + neighboursForRandomSelect[randomNeighbour].position.x) / 2, (cursor.y + neighboursForRandomSelect[randomNeighbour].position.y) / 2);
             majorLabirynthGrid[w.x, w.y].type = MajorCell.CELL_TYPE.PATH;
+
+            int randomDoorIndex = randomNumbersGenerator.GetRandomNumber(3, MinorLabirynthDimmension - 3);
+            if (randomDoorIndex % 2 == 0) randomDoorIndex++;
+
+
+            int dir = -1;
+
+            for(int i = 0; i < neighbours.Count; i++)
+            {
+                if(neighbours[i] == neighboursForRandomSelect[randomNeighbour])
+                {
+                    dir = i;
+                    break;
+                }
+            }
+            
+            switch (dir)
+            { 
+                case 0:
+                    //right
+                    majorLabirynthGrid[cursor.x, cursor.y].R = randomDoorIndex;
+                    majorLabirynthGrid[w.x, w.y].L = randomDoorIndex;
+
+                        randomDoorIndex = randomNumbersGenerator.GetRandomNumber(3, MinorLabirynthDimmension - 3);
+                        if (randomDoorIndex % 2 == 0) randomDoorIndex++;
+
+                    majorLabirynthGrid[neighboursForRandomSelect[randomNeighbour].position.x, neighboursForRandomSelect[randomNeighbour].position.y].L = randomDoorIndex;
+                    majorLabirynthGrid[w.x, w.y].R = randomDoorIndex;
+                    break;
+                case 1:
+                    //left
+                    majorLabirynthGrid[cursor.x, cursor.y].L = randomDoorIndex;
+                    majorLabirynthGrid[w.x, w.y].R = randomDoorIndex;
+
+                    randomDoorIndex = randomNumbersGenerator.GetRandomNumber(3, MinorLabirynthDimmension - 3);
+                    if (randomDoorIndex % 2 == 0) randomDoorIndex++;
+
+                    majorLabirynthGrid[neighboursForRandomSelect[randomNeighbour].position.x, neighboursForRandomSelect[randomNeighbour].position.y].R = randomDoorIndex;
+                    majorLabirynthGrid[w.x, w.y].L = randomDoorIndex;
+                    break;
+                case 2:
+                    //top
+                    majorLabirynthGrid[cursor.x, cursor.y].T = randomDoorIndex;
+                    majorLabirynthGrid[w.x, w.y].B = randomDoorIndex;
+
+                    randomDoorIndex = randomNumbersGenerator.GetRandomNumber(3, MinorLabirynthDimmension - 3);
+                    if (randomDoorIndex % 2 == 0) randomDoorIndex++;
+
+                    majorLabirynthGrid[neighboursForRandomSelect[randomNeighbour].position.x, neighboursForRandomSelect[randomNeighbour].position.y].B = randomDoorIndex;
+                    majorLabirynthGrid[w.x, w.y].T = randomDoorIndex;
+                    break;
+                case 3:
+                    //bottom
+                    majorLabirynthGrid[cursor.x, cursor.y].B = randomDoorIndex;
+                    majorLabirynthGrid[w.x, w.y].T = randomDoorIndex;
+
+                    randomDoorIndex = randomNumbersGenerator.GetRandomNumber(3, MinorLabirynthDimmension - 3);
+                    if (randomDoorIndex % 2 == 0) randomDoorIndex++;
+
+                    majorLabirynthGrid[neighboursForRandomSelect[randomNeighbour].position.x, neighboursForRandomSelect[randomNeighbour].position.y].T = randomDoorIndex;
+                    majorLabirynthGrid[w.x, w.y].B = randomDoorIndex;
+                    break;
+            }
 
             //"timeout" variable decrising
             c--;
@@ -183,8 +255,16 @@ public class MajorLabirynth : MonoBehaviour
 
 
             //skip if direction pointing outside grid or pointed element isn`t EMPTY type
-            if (dir.x < 0 || dir.x >= MajorLabirynthDimmension || dir.y < 0 || dir.y >= MajorLabirynthDimmension) continue;
-            if (majorLabirynthGrid[dir.x, dir.y].type == MajorCell.CELL_TYPE.WALL || majorLabirynthGrid[dir.x, dir.y].type == MajorCell.CELL_TYPE.OBSTICLE || majorLabirynthGrid[dir.x, dir.y].type == MajorCell.CELL_TYPE.PATH) continue;
+            if (dir.x < 0 || dir.x >= MajorLabirynthDimmension || dir.y < 0 || dir.y >= MajorLabirynthDimmension)
+            {
+                neighbours.Add(null);
+                continue;
+            }
+            if (majorLabirynthGrid[dir.x, dir.y].type == MajorCell.CELL_TYPE.WALL || majorLabirynthGrid[dir.x, dir.y].type == MajorCell.CELL_TYPE.OBSTICLE || majorLabirynthGrid[dir.x, dir.y].type == MajorCell.CELL_TYPE.PATH)
+            {
+                neighbours.Add(null);
+                continue;
+            }
 
             //add neighbour to list
             neighbours.Add(majorLabirynthGrid[dir.x, dir.y]);
@@ -218,7 +298,13 @@ public class MajorLabirynth : MonoBehaviour
                 majorCellObjectsGrid[x, y] = (GameObject)Instantiate(majorCellPrefab, position, Quaternion.Euler(0, 0, 0));
                 majorCellObjectsGrid[x, y].transform.localScale = new Vector3(MajorSize, MajorSize, 0);
                 majorCellObjectsGrid[x, y].transform.parent = transform;
-                majorCellObjectsGrid[x, y].GetComponent<MajorCellObject>().Initialize(MinorLabirynthDimmension, MinorSize, MajorSize, majorLabirynthGrid[x, y].type);
+
+                int L = majorLabirynthGrid[x, y].L;
+                int T = majorLabirynthGrid[x, y].T;
+                int R = majorLabirynthGrid[x, y].R;
+                int B = majorLabirynthGrid[x, y].B;
+
+                majorCellObjectsGrid[x, y].GetComponent<MajorCellObject>().Initialize(MinorLabirynthDimmension, MinorSize, MajorSize, majorLabirynthGrid[x, y].type, L, T, R, B);
 
             }
         }

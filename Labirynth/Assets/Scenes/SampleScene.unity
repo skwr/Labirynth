@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70cf0ddfaac43a146958bfd7fcae5783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seed: 5152226
+  seed: 5152726
 --- !u!4 &98256053
 Transform:
   m_ObjectHideFlags: 0
@@ -404,9 +404,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c48c75bce62ac47ae23573514ade06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MajorLabirynthDimmension: 7
+  MajorLabirynthDimmension: 9
   MinorLabirynthDimmension: 15
-  MinorSize: 0.2
+  MinorSize: 0.8
   majorCellPrefab: {fileID: 3526329774820896501, guid: b6f6d88a60716b0498dfa93335292590,
     type: 3}
   randomNumbersGenerator: {fileID: 98256052}
