@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     [SerializeField]
-    Camera cam;     //camera instance
+    Camera cam = null;     //camera instance
     [SerializeField]
     LayerMask cellMask;     //layer mask to cutout detecting smfg different than cell object
 
@@ -13,6 +13,7 @@ public class PlayerCamera : MonoBehaviour
     void Start()
     {
         
+
     }
 
     // Update is called once per frame
