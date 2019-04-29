@@ -422,11 +422,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c48c75bce62ac47ae23573514ade06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MajorLabirynthDimmension: 10
-  MinorLabirynthDimmension: 10
-  globalSize: 5
-  MinorSize: 0
-  MajorSize: 0
+  MajorLabirynthDimmension: 7
+  MinorLabirynthDimmension: 15
+  MinorSize: 0.2
   majorCellPrefab: {fileID: 3526329774820896501, guid: b6f6d88a60716b0498dfa93335292590,
     type: 3}
   randomNumbersGenerator: {fileID: 98256052}

@@ -16,12 +16,14 @@ public class MajorLabirynth : MonoBehaviour
     int MinorLabirynthDimmension;
 
     [SerializeField]
+    float MinorSize;
+
+    float MajorSize;
+
+    
     float globalSize;
 
-    [SerializeField]
-    float MinorSize;
-    [SerializeField]
-    float MajorSize;
+    
     
 
     [SerializeField]
@@ -46,9 +48,9 @@ public class MajorLabirynth : MonoBehaviour
         if (MajorLabirynthDimmension % 2 == 0) MajorLabirynthDimmension++;
         if (MinorLabirynthDimmension % 2 == 0) MinorLabirynthDimmension++;
 
-        MinorSize = globalSize / MinorLabirynthDimmension / MajorLabirynthDimmension;
-        MajorSize = globalSize / MajorLabirynthDimmension;
 
+        MajorSize = MinorLabirynthDimmension * MinorSize;
+        globalSize = MinorLabirynthDimmension * MinorSize * MajorLabirynthDimmension;
 
         
 
