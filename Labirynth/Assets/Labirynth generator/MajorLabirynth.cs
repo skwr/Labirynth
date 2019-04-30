@@ -274,15 +274,30 @@ public class MajorLabirynth : MonoBehaviour
 
     }
 
+    List<GameObject> objectsToInicialize = new List<GameObject>();
 
     // Update is called once per frame
     void Update()
     {
+        if(objectsToInicialize.Count > 0)
+        {
+            if (objectsToInicialize[0].GetComponent<MajorCellObject>().spawnDone)
+            {
+                if(objectsToInicialize.Count > 1)
+                {
+                    objectsToInicialize[1].GetComponent<MajorCellObject>().Initialize(MinorLabirynthDimmension, MinorSize, MajorSize);
+                }
+                
+                objectsToInicialize.RemoveAt(0);
+            }
+        }
+        
         //wait with spawning to generator finish generating and execute Spawn() method once
         if (generatingDone)
         {
             generatingDone = false;
             Spawn();
+            objectsToInicialize[0].GetComponent<MajorCellObject>().Initialize(MinorLabirynthDimmension, MinorSize, MajorSize);
         }
     }
 
@@ -298,13 +313,17 @@ public class MajorLabirynth : MonoBehaviour
                 majorCellObjectsGrid[x, y] = (GameObject)Instantiate(majorCellPrefab, position, Quaternion.Euler(0, 0, 0));
                 majorCellObjectsGrid[x, y].transform.localScale = new Vector3(MajorSize, MajorSize, 0);
                 majorCellObjectsGrid[x, y].transform.parent = transform;
+                majorCellObjectsGrid[x, y].GetComponent<MajorCellObject>().type = majorLabirynthGrid[x, y].type;
+                majorCellObjectsGrid[x, y].GetComponent<MajorCellObject>().L = majorLabirynthGrid[x, y].L;
+                majorCellObjectsGrid[x, y].GetComponent<MajorCellObject>().T = majorLabirynthGrid[x, y].T;
+                majorCellObjectsGrid[x, y].GetComponent<MajorCellObject>().R = majorLabirynthGrid[x, y].R;
+                majorCellObjectsGrid[x, y].GetComponent<MajorCellObject>().B = majorLabirynthGrid[x, y].B;
 
-                int L = majorLabirynthGrid[x, y].L;
-                int T = majorLabirynthGrid[x, y].T;
-                int R = majorLabirynthGrid[x, y].R;
-                int B = majorLabirynthGrid[x, y].B;
+                
 
-                majorCellObjectsGrid[x, y].GetComponent<MajorCellObject>().Initialize(MinorLabirynthDimmension, MinorSize, MajorSize, majorLabirynthGrid[x, y].type, L, T, R, B);
+                objectsToInicialize.Add(majorCellObjectsGrid[x, y]);
+
+                //majorCellObjectsGrid[x, y].GetComponent<MajorCellObject>().Initialize(MinorLabirynthDimmension, MinorSize, MajorSize, majorLabirynthGrid[x, y].type, L, T, R, B);
 
             }
         }
@@ -312,6 +331,7 @@ public class MajorLabirynth : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireCube(transform.position/* - new Vector3(globalSize / 2, globalSize / 2, 0)*/, new Vector3(globalSize, globalSize, 0));
+        float offset = 0.4f;
+        Gizmos.DrawWireCube(transform.position/* - new Vector3(globalSize / 2, globalSize / 2, 0)*/, new Vector3(globalSize * transform.localScale.x + offset, globalSize * transform.localScale.y + offset, 0));
     }
 }

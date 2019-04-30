@@ -26,6 +26,7 @@ public class MajorCellObject : RebuildCellObject
 
     bool generatingDone = false;    //flag to let this object spawn generated labirynth
 
+    public bool spawnDone = false;
 
     float minorSize;    //size of minor object in space, getted from labirynth object
     int minorDimension; //dimension of minor labirynth, getted form labirynth object
@@ -37,14 +38,13 @@ public class MajorCellObject : RebuildCellObject
     [HideInInspector]
     public int L, T, R, B;
 
+    public MajorCell.CELL_TYPE type;
 
-
-    public void Initialize(int MinorDimension, float MinorSize, float MajorSize, MajorCell.CELL_TYPE type, int _L, int _T, int _R, int _B)
+    public void Initialize(int MinorDimension, float MinorSize, float MajorSize)
     {
-        L = _L;
-        T = _T;
-        R = _R;
-        B = _B;
+        
+
+        
 
         //initialize this object generator
         //creating its own labirynth
@@ -67,9 +67,11 @@ public class MajorCellObject : RebuildCellObject
             case MajorCell.CELL_TYPE.EMPTY:
 
                 thisRenderer.sprite = sprites[0];
+                spawnDone = true;
                 break;
             case MajorCell.CELL_TYPE.OBSTICLE:
                 thisRenderer.sprite = sprites[0];
+                spawnDone = true;
                 break;
             case MajorCell.CELL_TYPE.PATH:
                 //start generating minor labirynth
@@ -79,6 +81,7 @@ public class MajorCellObject : RebuildCellObject
                 break;
             case MajorCell.CELL_TYPE.WALL:
                 thisRenderer.sprite = sprites[0];
+                spawnDone = true;
                 break;
         }
 
@@ -173,8 +176,7 @@ public class MajorCellObject : RebuildCellObject
             c--;
 
         }
-
-        Debug.Log(L + " " + T + " " + R + " " + B);
+        
         if(L > 0)
         {
             minorLabirynthGrid[0, L].type = MajorCell.CELL_TYPE.PATH;
@@ -272,6 +274,8 @@ public class MajorCellObject : RebuildCellObject
 
             }
         }
+        
+        spawnDone = true;
     }
 
 
