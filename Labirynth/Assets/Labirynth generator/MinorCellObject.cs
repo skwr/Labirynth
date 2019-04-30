@@ -32,17 +32,19 @@ public class MinorCellObject : RebuildCellObject
         switch (type)
         {
             case MajorCell.CELL_TYPE.EMPTY:
-
                 thisRenderer.sprite = sprites[0];
+                GetComponent<BoxCollider2D>().enabled = true;
                 break;
             case MajorCell.CELL_TYPE.OBSTICLE:
                 thisRenderer.sprite = sprites[0];
+                GetComponent<BoxCollider2D>().enabled = true;
                 break;
             case MajorCell.CELL_TYPE.PATH:
                 thisRenderer.sprite = null;
                 break;
             case MajorCell.CELL_TYPE.WALL:
                 thisRenderer.sprite = sprites[0];
+                GetComponent<BoxCollider2D>().enabled = true;
                 break;
         }
     }

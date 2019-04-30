@@ -5,7 +5,7 @@ using UnityEngine;
 public class Trigger : MonoBehaviour
 {
     [SerializeField]
-    List<MajorLabirynth> generators = null;
+    List<GameObject> generators = null;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +21,8 @@ public class Trigger : MonoBehaviour
             for (int i = 0; i < generators.Count; i++)
             if(generators[i])
             {
-                 //place to start listed generators
+                    //place to start listed generators
+                    generators[i].GetComponent<ITrigger>().Execute();
             }
         }
     }

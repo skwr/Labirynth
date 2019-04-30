@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MajorLabirynthDimmension: 11
   MinorLabirynthDimmension: 11
-  MinorSize: 0.2
+  MinorSize: 1
   majorCellPrefab: {fileID: 3526329774820896501, guid: b6f6d88a60716b0498dfa93335292590,
     type: 3}
   randomNumbersGenerator: {fileID: 0}

@@ -70,6 +70,7 @@
     <Compile Include="Assets\Master Scripts\CameraController.cs" />
     <Compile Include="Assets\Master Scripts\CameraGizmos.cs" />
     <Compile Include="Assets\Master Scripts\IntVector2.cs" />
+    <Compile Include="Assets\Master Scripts\ITrigger.cs" />
     <Compile Include="Assets\Master Scripts\Trigger.cs" />
     <Compile Include="Assets\Player\PlayerCamera.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">

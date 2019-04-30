@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class MajorLabirynth : MonoBehaviour
+public class MajorLabirynth : MonoBehaviour, ITrigger
 {
     MajorCell[,] majorLabirynthGrid;
     GameObject[,] majorCellObjectsGrid;
@@ -48,20 +48,25 @@ public class MajorLabirynth : MonoBehaviour
         globalSize = MinorLabirynthDimmension * MinorSize * MajorLabirynthDimmension;
 
         
-        Generate(new IntVector2(1, 1)); //make execute from outer source
+        //Generate(new IntVector2(1, 1)); //make execute from outer source
         
 
     }
 
-    //method that is starting new thread for generating
-    public void Generate(IntVector2 _startCursor)
+    public void Execute()
     {
-        cursor = _startCursor;
+        Generate();
+    }
+
+    //method that is starting new thread for generating
+    public void Generate()
+    {
+        cursor = new IntVector2(1, 1);
 
         majorCellObjectsGrid = new GameObject[MajorLabirynthDimmension, MajorLabirynthDimmension];
         majorLabirynthGrid = new MajorCell[MajorLabirynthDimmension, MajorLabirynthDimmension];
 
-        
+        randomNumbersGenerator = GameObject.FindGameObjectWithTag("RandomNumbersGenerator").GetComponent<RandomNumbersGenerator>();
 
         Thread generator = new Thread(Generating);
         generator.Start();
