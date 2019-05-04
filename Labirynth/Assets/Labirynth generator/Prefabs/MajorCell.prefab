@@ -54,6 +54,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4603ceeacba088942ba0a94a495e40a7, type: 3}
   randomNumbersGenerator: {fileID: 0}
   repeatChance: 50
+  spawnDone: 0
+  L: 0
+  T: 0
+  R: 0
+  B: 0
+  type: 0
 --- !u!212 &8621355377835032140
 SpriteRenderer:
   m_ObjectHideFlags: 0

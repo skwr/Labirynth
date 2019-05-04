@@ -267,10 +267,10 @@ public class MajorCellObject : RebuildCellObject
             {
                 Vector3 position = new Vector3(transform.position.x - (majorSize / 2) + (x * minorSize) + (minorSize / 2), transform.position.y - (majorSize / 2) + (y * minorSize) + (minorSize / 2), 0);
 
-                minorCellObjectsGrid[x, y] = (GameObject)Instantiate(minorCellPrefab, position, Quaternion.Euler(0, 0, 0));
-                minorCellObjectsGrid[x, y].transform.localScale = new Vector3(minorSize, minorSize, 0);
-                minorCellObjectsGrid[x, y].GetComponent<MinorCellObject>().Initialize(minorSize, minorLabirynthGrid[x, y].type);
-                minorCellObjectsGrid[x, y].transform.parent = transform;
+                //minorCellObjectsGrid[x, y] = (GameObject)Instantiate(minorCellPrefab, position, Quaternion.Euler(0, 0, 0));
+               // minorCellObjectsGrid[x, y].transform.localScale = new Vector3(minorSize, minorSize, 0);
+                //minorCellObjectsGrid[x, y].GetComponent<MinorCellObject>().Initialize(minorSize, minorLabirynthGrid[x, y].type);
+                //minorCellObjectsGrid[x, y].transform.parent = transform;
 
             }
         }

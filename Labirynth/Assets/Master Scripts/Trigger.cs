@@ -7,6 +7,8 @@ public class Trigger : MonoBehaviour
     [SerializeField]
     List<GameObject> generators = null;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {

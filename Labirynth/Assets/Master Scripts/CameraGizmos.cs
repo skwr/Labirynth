@@ -22,9 +22,15 @@ public class CameraGizmos : MonoBehaviour
     [SerializeField]
     bool gizmosAllTheTime = false;
 
+    [SerializeField]
+    GameObject mat;
+
+
     private void Update()
     {
         size = GetComponent<Camera>().orthographicSize * (scaling / 100);       //seting size of camera FOV circle
+
+        
     }
 
     
