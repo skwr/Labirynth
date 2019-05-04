@@ -72,11 +72,11 @@
     <Compile Include="Assets\Labirynth generator\RebuildCellObject.cs" />
     <Compile Include="Assets\Master Scripts\CameraController.cs" />
     <Compile Include="Assets\Master Scripts\CameraGizmos.cs" />
+    <Compile Include="Assets\Master Scripts\InputMenager.cs" />
     <Compile Include="Assets\Master Scripts\IntVector2.cs" />
     <Compile Include="Assets\Master Scripts\ITrigger.cs" />
     <Compile Include="Assets\Master Scripts\Trigger.cs" />
     <Compile Include="Assets\Player\PlayerCamera.cs" />
-    <Compile Include="Assets\positions.cs" />
     <Compile Include="Assets\shader graph tests\FovRadius.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Julek/Documents/projekty Unity/Labirynth/Labirynth/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

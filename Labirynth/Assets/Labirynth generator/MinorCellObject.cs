@@ -26,7 +26,7 @@ public class MinorCellObject : RebuildCellObject
 
     private void Start()
     {
-        thisRenderer = GetComponent<SpriteRenderer>();
+        
     }
 
 
@@ -35,7 +35,8 @@ public class MinorCellObject : RebuildCellObject
     {
         //initializing minor object
         //
-       
+
+        thisRenderer = GetComponent<SpriteRenderer>();
 
         minorSize = _minorSize;
 
@@ -70,7 +71,7 @@ public class MinorCellObject : RebuildCellObject
     private void Update()
     {
         
-        //size = new Vector3(minorSize * transform.parent.transform.parent.transform.localScale.x, minorSize * transform.parent.transform.parent.transform.localScale.y);
+        size = new Vector3(minorSize * transform.parent.transform.parent.transform.localScale.x, minorSize * transform.parent.transform.parent.transform.localScale.y);
 
         
 
@@ -78,12 +79,9 @@ public class MinorCellObject : RebuildCellObject
         thisRenderer.GetPropertyBlock(mpb);
 
         
-        //mpb.SetFloat("Vector1_68287AFD", Camera.main.transform.localScale.x);
+        mpb.SetFloat("Vector1_68287AFD", Camera.main.transform.localScale.x);
 
         thisRenderer.SetPropertyBlock(mpb);
-
-
-
 
     }
 
