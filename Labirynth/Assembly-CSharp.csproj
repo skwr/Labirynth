@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\CameraFollow.cs" />
+    <Compile Include="Assets\CellObjectController.cs" />
     <Compile Include="Assets\Labirynth generator rebuilding\Labirynth.cs" />
     <Compile Include="Assets\Labirynth generator rebuilding\LabirynthCell.cs" />
     <Compile Include="Assets\Labirynth generator rebuilding\MinorGrid.cs" />

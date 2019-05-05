@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LabirynthCell
 {
-    public enum TYPE { WALL, WALKABLE, PATH};
+    public enum TYPE { WALL, WALKABLE, PATH, EMPTY};
 
     public TYPE type;
 

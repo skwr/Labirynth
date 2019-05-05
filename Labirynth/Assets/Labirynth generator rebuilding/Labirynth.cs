@@ -10,7 +10,11 @@ public class Labirynth : MonoBehaviour
 {
     MinorGrid[ , ] grid;
 
-    int majorDimension, minorDimension;
+    [SerializeField]
+    int majorDimension = 5, minorDimension = 5;
+
+    [SerializeField]
+    float minorSize = 1;
 
     IntVector2 cursor;
 
@@ -25,20 +29,41 @@ public class Labirynth : MonoBehaviour
     [Range(0, 100)]
     int minorRepeatChance;
 
+    [SerializeField]
+    GameObject wallPrefab, pathPrefab;
+
+    [SerializeField]
+    Texture2D tx1, tx2;
+
+    bool generatingDone = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        GenerateLabirynth(5, 5, 1);
+        GenerateLabirynth();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (generatingDone)
+        {
+            generatingDone = false;
+            Spawn();
+        }
+    }
+
+    public void GenerateLabirynth()
+    {
+        GenerateLabirynth(majorDimension, minorDimension, minorSize);
     }
 
     public void GenerateLabirynth(int _majorDimension, int _minorDimension, float _minorSize)
     {
+        majorDimension = _majorDimension;
+        minorDimension = _minorDimension;
+        minorSize = _minorSize;
+
         if(randomNumbersGenerator == null)
         {
             GameObject rndObject = GameObject.FindGameObjectWithTag("RandomNumbersGenerator");
@@ -96,6 +121,8 @@ public class Labirynth : MonoBehaviour
         List<MinorGrid> walkedMajorCells = new List<MinorGrid>();
         grid[cursor.x, cursor.y].type = LabirynthCell.TYPE.PATH;
         walkedMajorCells.Add(grid[cursor.x, cursor.y]);
+
+        grid[cursor.x, cursor.y].Generate();
 
         int majorTimeout = (int)Mathf.Pow(majorDimension, 2) * 2;
         Debug.Log("major timeout control: " + majorTimeout);
@@ -163,47 +190,13 @@ public class Labirynth : MonoBehaviour
             }
         }
 
-        LabirynthCell[ , ] allCells = new LabirynthCell[majorDimension * minorDimension, majorDimension * minorDimension];
 
-        for(int y = 0; y < majorDimension * minorDimension; y++)
-        {
-            for (int x = 0; x < majorDimension * minorDimension; x++)
-            {
 
-                int majorX = x / minorDimension;
-                int majorY = y / minorDimension;
-                int minorX = x % minorDimension;
-                int minorY = y % minorDimension;
-                Debug.Log("(" + majorX + ", " + majorY + ") (" + minorX + ", " + minorY + ") " + grid[majorX, majorY].minorGrid);
-                allCells[x, y] = grid[majorX, majorY].minorGrid[minorX, minorY];
-            }
-        }
 
-        String d = "";
-        for (int y = 0; y < majorDimension * minorDimension; y++)
-        {
-            for (int x = 0; x < majorDimension * minorDimension; x++)
-            {
-                switch(allCells[x, y].type)
-                {
-                    case LabirynthCell.TYPE.WALL:
-                        d += "#";
-                        break;
-                    case LabirynthCell.TYPE.PATH:
-                        d += "@";
-                        break;
-                    default:
-                        d += "x";
-                        break;
-                }
-                
-                d += " ";
-            }
-            Debug.Log(d);
-            d = "";
-        }
 
-        
+
+
+        generatingDone = true;
 
         Debug.Log("generated");
     }
@@ -261,6 +254,36 @@ public class Labirynth : MonoBehaviour
 
     public void Spawn()
     {
+        for (int y1 = 0; y1 < majorDimension; y1++)
+        {
+            for (int x1 = 0; x1 < majorDimension; x1++)
+            {
+                for (int y2 = 0; y2 < minorDimension; y2++)
+                {
+                    for (int x2 = 0; x2 < minorDimension; x2++)
+                    {
+                        if(grid[x1, y1].minorGrid[x2, y2].type == LabirynthCell.TYPE.EMPTY)
+                        {
+                            continue;
+                        }
+                        
+                        if (grid[x1, y1].minorGrid[x2, y2].type == LabirynthCell.TYPE.PATH)
+                        {
+                            GameObject cell = (GameObject)Instantiate(pathPrefab, transform);
+                            cell.transform.position = new Vector3(x1 * minorDimension * minorSize + x2 * minorSize, y1 * minorDimension * minorSize + y2 * minorSize, 0);
 
+                        }
+                        else
+                        {
+                            GameObject cell = (GameObject)Instantiate(wallPrefab, transform);
+                            cell.transform.position = new Vector3(x1 * minorDimension * minorSize + x2 * minorSize, y1 * minorDimension * minorSize + y2 * minorSize, 0);
+
+                        }
+
+                    }
+                }
+                
+            }
+        }
     }
 }

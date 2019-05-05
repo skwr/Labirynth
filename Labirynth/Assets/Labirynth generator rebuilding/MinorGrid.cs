@@ -34,7 +34,7 @@ public class MinorGrid
             for (int x = 0; x < minorDimension; x++)
             {
                 
-                minorGrid[x, y] = new LabirynthCell(new IntVector2(x, y), LabirynthCell.TYPE.WALL);
+                minorGrid[x, y] = new LabirynthCell(new IntVector2(x, y), LabirynthCell.TYPE.EMPTY);
                 
 
             }
