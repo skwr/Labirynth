@@ -34,8 +34,7 @@ public class CameraController : MonoBehaviour
         //moveing camera to new position using Linear Interpolation
         transform.position = new Vector3(Mathf.Lerp(posX, targerLocation.x, movementSmooth), Mathf.Lerp(posY, targerLocation.y, movementSmooth), -10);
 
-        //updating size of collider based on margin percentage
-        col.radius = GetComponent<CameraGizmos>().size + (colMargin * GetComponent<CameraGizmos>().size)/100;
+        
     }
 
     //public method to call from outside

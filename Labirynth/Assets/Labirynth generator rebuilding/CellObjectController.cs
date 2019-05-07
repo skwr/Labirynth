@@ -17,9 +17,18 @@ public class CellObjectController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        fovRadius = Camera.main.transform.localScale.x;
-        lastState = visible;
         sr = GetComponent<SpriteRenderer>();
+
+        fovRadius = Camera.main.transform.localScale.x;
+
+        MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+        sr.GetPropertyBlock(mpb);
+        mpb.SetFloat("Vector1_68287AFD", fovRadius);
+
+        sr.SetPropertyBlock(mpb);
+
+        lastState = visible;
+        
 
         
     }

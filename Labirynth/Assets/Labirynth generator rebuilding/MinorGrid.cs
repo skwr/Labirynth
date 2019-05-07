@@ -41,12 +41,12 @@ public class MinorGrid
         }
 
 
-        Debug.Log("minor grid prepared");
+        //Debug.Log("minor grid prepared");
     }
 
     public void Generate()
     {
-        Debug.Log("generating minor labirynth");
+        //Debug.Log("generating minor labirynth");
 
         for (int y = 0; y < minorDimension; y++)
         {
@@ -72,7 +72,7 @@ public class MinorGrid
 
 
         int minorTimeout = (int)Mathf.Pow(minorDimension, 2) * 2;
-        Debug.Log("minor timeout control: " + minorTimeout);
+        //Debug.Log("minor timeout control: " + minorTimeout);
         while (walkedMinorCells.Count > 0 && minorTimeout > 0)
         {
             int repeat = randomNumbersGenerator.GetRandomNumber(0, 101);     //get random number to draw if generator should make next step from last cursor position or draw new position from walkedCells

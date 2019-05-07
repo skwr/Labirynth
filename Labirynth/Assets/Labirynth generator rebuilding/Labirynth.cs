@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class Labirynth : MonoBehaviour
 {
+    Thread generator;
+
     MinorGrid[ , ] grid;
 
     [SerializeField]
@@ -18,7 +20,6 @@ public class Labirynth : MonoBehaviour
 
     IntVector2 cursor;
 
-    [SerializeField]
     RandomNumbersGenerator randomNumbersGenerator;
 
     [SerializeField]
@@ -90,10 +91,16 @@ public class Labirynth : MonoBehaviour
         majorDimension = _majorDimension;
         minorDimension = _minorDimension;
 
-        Thread generator = new Thread(Generating);
+        generator = new Thread(Generating);
         generator.Start();
 
         
+    }
+
+    private void OnApplicationQuit()
+    {
+        Debug.Log("aborting generator thread");
+        generator.Abort();
     }
 
     private void Generating()
@@ -125,7 +132,7 @@ public class Labirynth : MonoBehaviour
         grid[cursor.x, cursor.y].Generate();
 
         int majorTimeout = (int)Mathf.Pow(majorDimension, 2) * 2;
-        Debug.Log("major timeout control: " + majorTimeout);
+        //Debug.Log("major timeout control: " + majorTimeout);
         while(walkedMajorCells.Count > 0 && majorTimeout > 0)
         {
 
@@ -270,13 +277,13 @@ public class Labirynth : MonoBehaviour
                         if (grid[x1, y1].minorGrid[x2, y2].type == LabirynthCell.TYPE.PATH)
                         {
                             GameObject cell = (GameObject)Instantiate(pathPrefab, transform);
-                            cell.transform.position = new Vector3(x1 * minorDimension * minorSize + x2 * minorSize, y1 * minorDimension * minorSize + y2 * minorSize, 0);
+                            cell.transform.localPosition = new Vector3(x1 * minorDimension * minorSize + x2 * minorSize, y1 * minorDimension * minorSize + y2 * minorSize, 0);
 
                         }
                         else
                         {
                             GameObject cell = (GameObject)Instantiate(wallPrefab, transform);
-                            cell.transform.position = new Vector3(x1 * minorDimension * minorSize + x2 * minorSize, y1 * minorDimension * minorSize + y2 * minorSize, 0);
+                            cell.transform.localPosition = new Vector3(x1 * minorDimension * minorSize + x2 * minorSize, y1 * minorDimension * minorSize + y2 * minorSize, 0);
 
                         }
 

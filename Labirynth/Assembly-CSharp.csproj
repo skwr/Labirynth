@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\CameraFollow.cs" />
-    <Compile Include="Assets\CellObjectController.cs" />
+    <Compile Include="Assets\Labirynth generator rebuilding\CellObjectController.cs" />
     <Compile Include="Assets\Labirynth generator rebuilding\Labirynth.cs" />
     <Compile Include="Assets\Labirynth generator rebuilding\LabirynthCell.cs" />
     <Compile Include="Assets\Labirynth generator rebuilding\MinorGrid.cs" />
@@ -75,7 +75,6 @@
     <Compile Include="Assets\Labirynth generator\RandomNumbersGenerator.cs" />
     <Compile Include="Assets\Labirynth generator\RebuildCellObject.cs" />
     <Compile Include="Assets\Master Scripts\CameraController.cs" />
-    <Compile Include="Assets\Master Scripts\CameraGizmos.cs" />
     <Compile Include="Assets\Master Scripts\InputMenager.cs" />
     <Compile Include="Assets\Master Scripts\IntVector2.cs" />
     <Compile Include="Assets\Master Scripts\ITrigger.cs" />
