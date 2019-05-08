@@ -116,6 +116,8 @@ public class MinorGrid
 
             minorTimeout--;
         }
+
+        
     }
 
     private List<LabirynthCell> GetNeighbours(IntVector2 location)

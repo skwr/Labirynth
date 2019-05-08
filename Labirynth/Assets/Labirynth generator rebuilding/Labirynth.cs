@@ -6,7 +6,7 @@ using UnityEngine;
 
 
 
-public class Labirynth : MonoBehaviour
+public class Labirynth : MonoBehaviour, ITrigger
 {
     Thread generator;
 
@@ -40,6 +40,11 @@ public class Labirynth : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    {
+        
+    }
+
+    public void Execute()
     {
         GenerateLabirynth();
     }
@@ -99,8 +104,13 @@ public class Labirynth : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        Debug.Log("aborting generator thread");
-        generator.Abort();
+        
+        if (generator.IsAlive)
+        {
+            Debug.Log("aborting generator thread");
+            generator.Abort();
+        }
+        
     }
 
     private void Generating()
@@ -125,17 +135,21 @@ public class Labirynth : MonoBehaviour
             }
         }
 
+        
+
         List<MinorGrid> walkedMajorCells = new List<MinorGrid>();
         grid[cursor.x, cursor.y].type = LabirynthCell.TYPE.PATH;
         walkedMajorCells.Add(grid[cursor.x, cursor.y]);
 
         grid[cursor.x, cursor.y].Generate();
 
-        int majorTimeout = (int)Mathf.Pow(majorDimension, 2) * 2;
+        int majorTimeout = 5;// (int)Mathf.Pow(majorDimension, 2) * 2;
         //Debug.Log("major timeout control: " + majorTimeout);
-        while(walkedMajorCells.Count > 0 && majorTimeout > 0)
-        {
 
+        
+        while (walkedMajorCells.Count > 0 && majorTimeout > 0)
+        {
+            
             int repeat = randomNumbersGenerator.GetRandomNumber(0, 101);     //get random number to draw if generator should make next step from last cursor position or draw new position from walkedCells
             int randomWalked;
             if (repeat < majorRepeatChance)
@@ -148,7 +162,7 @@ public class Labirynth : MonoBehaviour
                 randomWalked = randomNumbersGenerator.GetRandomNumber(0, walkedMajorCells.Count);
                 cursor = walkedMajorCells[randomWalked].position;
             }
-
+            
 
             //get all neighbours of spot that is pointed by curosr
             List<MinorGrid> neighbours = GetNeighbours(cursor);
@@ -160,6 +174,7 @@ public class Labirynth : MonoBehaviour
                 neighboursForRandomSelect.Add(neighbours[i]);
             }
 
+            
 
             if (neighboursForRandomSelect.Count <= 0)
             {
@@ -175,16 +190,46 @@ public class Labirynth : MonoBehaviour
             grid[neighboursForRandomSelect[randomNeighbour].position.x, neighboursForRandomSelect[randomNeighbour].position.y].type = LabirynthCell.TYPE.PATH;
             minorLabirynthsToGenerate.Add(grid[neighboursForRandomSelect[randomNeighbour].position.x, neighboursForRandomSelect[randomNeighbour].position.y]);
 
+
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (neighboursForRandomSelect[randomNeighbour].Equals(neighbours[i]))
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            //right
+                            Debug.Log("right");
+                            break;
+                        case 1:
+                            //left
+                            Debug.Log("left");
+                            break;
+                        case 2:
+                            //up
+                            Debug.Log("up");
+                            break;
+                        case 3:
+                            //down
+                            Debug.Log("down");
+                            break;
+                    }
+                }
+            }
+
             IntVector2 w = new IntVector2((cursor.x + neighboursForRandomSelect[randomNeighbour].position.x) / 2, (cursor.y + neighboursForRandomSelect[randomNeighbour].position.y) / 2);
             grid[w.x, w.y].type = LabirynthCell.TYPE.PATH;
             minorLabirynthsToGenerate.Add(grid[w.x, w.y]);
 
+            
 
-
-            for(int i = 0; i < minorLabirynthsToGenerate.Count; i++)
+            for (int i = 0; i < minorLabirynthsToGenerate.Count; i++)
             {
                 minorLabirynthsToGenerate[i].Generate();
             }
+
+            
 
 
 
@@ -195,12 +240,14 @@ public class Labirynth : MonoBehaviour
                 Debug.LogWarning("MAJOR GENERATING TIMEOUT");
                 return;
             }
+
+            
         }
 
 
 
 
-
+        Debug.Log("tester");
 
 
         generatingDone = true;

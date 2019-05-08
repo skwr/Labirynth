@@ -7,7 +7,7 @@ public class Trigger : MonoBehaviour
     [SerializeField]
     List<GameObject> generators = null;
 
-    
+    bool pressed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,8 +18,9 @@ public class Trigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && !pressed)
         {
+            pressed = true;
             for (int i = 0; i < generators.Count; i++)
             if(generators[i])
             {
