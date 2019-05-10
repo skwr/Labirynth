@@ -269,8 +269,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   majorDimension: 11
-  minorDimension: 7
-  minorSize: 1
+  minorDimension: 9
+  minorSize: 2
   majorRepeatChance: 30
   minorRepeatChance: 0
   wallPrefab: {fileID: 7468147978922391709, guid: 6c2849fb20642df419ce35c69dcece12,

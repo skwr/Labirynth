@@ -104,12 +104,15 @@ public class Labirynth : MonoBehaviour, ITrigger
 
     private void OnApplicationQuit()
     {
-        
-        if (generator.IsAlive)
+        if (generator != null)
         {
-            Debug.Log("aborting generator thread");
-            generator.Abort();
+            if (generator.IsAlive)
+            {
+                Debug.Log("aborting generator thread");
+                generator.Abort();
+            }
         }
+        
         
     }
 
@@ -143,7 +146,7 @@ public class Labirynth : MonoBehaviour, ITrigger
 
         grid[cursor.x, cursor.y].Generate();
 
-        int majorTimeout = 5;// (int)Mathf.Pow(majorDimension, 2) * 2;
+        int majorTimeout = (int)Mathf.Pow(majorDimension, 2) * 2;
         //Debug.Log("major timeout control: " + majorTimeout);
 
         
@@ -184,6 +187,8 @@ public class Labirynth : MonoBehaviour, ITrigger
 
             int randomNeighbour = randomNumbersGenerator.GetRandomNumber(0, neighboursForRandomSelect.Count);
 
+            IntVector2 stepDirection = new IntVector2(neighboursForRandomSelect[randomNeighbour].position.x - cursor.x, neighboursForRandomSelect[randomNeighbour].position.y - cursor.y);
+
             List<MinorGrid> minorLabirynthsToGenerate = new List<MinorGrid>();
 
             walkedMajorCells.Add(neighboursForRandomSelect[randomNeighbour]);
@@ -191,32 +196,8 @@ public class Labirynth : MonoBehaviour, ITrigger
             minorLabirynthsToGenerate.Add(grid[neighboursForRandomSelect[randomNeighbour].position.x, neighboursForRandomSelect[randomNeighbour].position.y]);
 
 
-
-            for (int i = 0; i < 4; i++)
-            {
-                if (neighboursForRandomSelect[randomNeighbour].Equals(neighbours[i]))
-                {
-                    switch (i)
-                    {
-                        case 0:
-                            //right
-                            Debug.Log("right");
-                            break;
-                        case 1:
-                            //left
-                            Debug.Log("left");
-                            break;
-                        case 2:
-                            //up
-                            Debug.Log("up");
-                            break;
-                        case 3:
-                            //down
-                            Debug.Log("down");
-                            break;
-                    }
-                }
-            }
+            
+            
 
             IntVector2 w = new IntVector2((cursor.x + neighboursForRandomSelect[randomNeighbour].position.x) / 2, (cursor.y + neighboursForRandomSelect[randomNeighbour].position.y) / 2);
             grid[w.x, w.y].type = LabirynthCell.TYPE.PATH;
@@ -229,7 +210,83 @@ public class Labirynth : MonoBehaviour, ITrigger
                 minorLabirynthsToGenerate[i].Generate();
             }
 
-            
+            int firstDoor;
+            int secondDoor;
+
+            firstDoor = randomNumbersGenerator.GetRandomNumber(1, minorDimension - 2);
+            if(firstDoor%2 == 0)
+            {
+                if(firstDoor + 1 <= minorDimension - 2)
+                {
+                    firstDoor += 1;
+                }
+                else if(firstDoor - 1 >= 1)
+                {
+                    firstDoor -= 1;
+                }
+            }
+
+
+            secondDoor = randomNumbersGenerator.GetRandomNumber(1, minorDimension - 2);
+
+            if (secondDoor % 2 == 0)
+            {
+                if (secondDoor + 1 <= minorDimension - 2)
+                {
+                    secondDoor += 1;
+                }
+                else if (secondDoor - 1 >= 1)
+                {
+                    secondDoor -= 1;
+                }
+            }
+
+            if (stepDirection.x != 0)
+            {
+                if (stepDirection.x < 0)
+                {
+                    grid[neighboursForRandomSelect[randomNeighbour].position.x, neighboursForRandomSelect[randomNeighbour].position.y].minorGrid[minorDimension - 1, secondDoor].type = LabirynthCell.TYPE.PATH;
+
+                    grid[cursor.x, cursor.y].minorGrid[0, firstDoor].type = LabirynthCell.TYPE.PATH;
+
+                    grid[w.x, w.y].minorGrid[0, secondDoor].type = LabirynthCell.TYPE.PATH;
+                    grid[w.x, w.y].minorGrid[minorDimension - 1, firstDoor].type = LabirynthCell.TYPE.PATH;
+                }
+                else if (stepDirection.x > 0)
+                {
+                    grid[neighboursForRandomSelect[randomNeighbour].position.x, neighboursForRandomSelect[randomNeighbour].position.y].minorGrid[0, secondDoor].type = LabirynthCell.TYPE.PATH;
+
+                    grid[cursor.x, cursor.y].minorGrid[minorDimension - 1, firstDoor].type = LabirynthCell.TYPE.PATH;
+
+                    grid[w.x, w.y].minorGrid[0, firstDoor].type = LabirynthCell.TYPE.PATH;
+                    grid[w.x, w.y].minorGrid[minorDimension - 1, secondDoor].type = LabirynthCell.TYPE.PATH;
+                }
+
+                
+            }
+            else if (stepDirection.y != 0)
+            {
+                if (stepDirection.y < 0)
+                {
+                    grid[neighboursForRandomSelect[randomNeighbour].position.x, neighboursForRandomSelect[randomNeighbour].position.y].minorGrid[secondDoor, minorDimension - 1].type = LabirynthCell.TYPE.PATH;
+
+                    grid[cursor.x, cursor.y].minorGrid[firstDoor, 0].type = LabirynthCell.TYPE.PATH;
+
+                    grid[w.x, w.y].minorGrid[secondDoor, 0].type = LabirynthCell.TYPE.PATH;
+                    grid[w.x, w.y].minorGrid[firstDoor, minorDimension - 1].type = LabirynthCell.TYPE.PATH;
+                }
+                else if (stepDirection.y > 0)
+                {
+                    grid[neighboursForRandomSelect[randomNeighbour].position.x, neighboursForRandomSelect[randomNeighbour].position.y].minorGrid[secondDoor, 0].type = LabirynthCell.TYPE.PATH;
+
+                    grid[cursor.x, cursor.y].minorGrid[firstDoor, minorDimension - 1].type = LabirynthCell.TYPE.PATH;
+
+                    grid[w.x, w.y].minorGrid[firstDoor, 0].type = LabirynthCell.TYPE.PATH;
+                    grid[w.x, w.y].minorGrid[secondDoor, minorDimension - 1].type = LabirynthCell.TYPE.PATH;
+                }
+
+                
+            }
 
 
 
@@ -243,12 +300,6 @@ public class Labirynth : MonoBehaviour, ITrigger
 
             
         }
-
-
-
-
-        Debug.Log("tester");
-
 
         generatingDone = true;
 
@@ -325,13 +376,13 @@ public class Labirynth : MonoBehaviour, ITrigger
                         {
                             GameObject cell = (GameObject)Instantiate(pathPrefab, transform);
                             cell.transform.localPosition = new Vector3(x1 * minorDimension * minorSize + x2 * minorSize, y1 * minorDimension * minorSize + y2 * minorSize, 0);
-
+                            cell.transform.localScale = new Vector3(minorSize, minorSize, 1);
                         }
                         else
                         {
                             GameObject cell = (GameObject)Instantiate(wallPrefab, transform);
                             cell.transform.localPosition = new Vector3(x1 * minorDimension * minorSize + x2 * minorSize, y1 * minorDimension * minorSize + y2 * minorSize, 0);
-
+                            cell.transform.localScale = new Vector3(minorSize, minorSize, 1);
                         }
 
                     }
