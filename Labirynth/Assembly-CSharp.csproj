@@ -62,25 +62,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CameraFollow.cs" />
-    <Compile Include="Assets\Labirynth generator rebuilding\CellObjectController.cs" />
-    <Compile Include="Assets\Labirynth generator rebuilding\Labirynth.cs" />
-    <Compile Include="Assets\Labirynth generator rebuilding\LabirynthCell.cs" />
-    <Compile Include="Assets\Labirynth generator rebuilding\MinorGrid.cs" />
-    <Compile Include="Assets\Labirynth generator\Cell.cs" />
-    <Compile Include="Assets\Labirynth generator\MajorCell.cs" />
-    <Compile Include="Assets\Labirynth generator\MajorCellObject.cs" />
-    <Compile Include="Assets\Labirynth generator\MajorLabirynth.cs" />
-    <Compile Include="Assets\Labirynth generator\MinorCellObject.cs" />
-    <Compile Include="Assets\Labirynth generator\RandomNumbersGenerator.cs" />
-    <Compile Include="Assets\Labirynth generator\RebuildCellObject.cs" />
+    <Compile Include="Assets\Labirynth\CellObjectController.cs" />
+    <Compile Include="Assets\Labirynth\Labirynth.cs" />
+    <Compile Include="Assets\Labirynth\LabirynthCell.cs" />
+    <Compile Include="Assets\Labirynth\MinorGrid.cs" />
+    <Compile Include="Assets\Labirynth\RandomNumbersGenerator.cs" />
     <Compile Include="Assets\Master Scripts\CameraController.cs" />
     <Compile Include="Assets\Master Scripts\InputMenager.cs" />
     <Compile Include="Assets\Master Scripts\IntVector2.cs" />
     <Compile Include="Assets\Master Scripts\ITrigger.cs" />
     <Compile Include="Assets\Master Scripts\Trigger.cs" />
     <Compile Include="Assets\Player\PlayerCamera.cs" />
-    <Compile Include="Assets\shader graph tests\FovRadius.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Julek/Documents/projekty Unity/Labirynth/Labirynth/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
