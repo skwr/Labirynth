@@ -214,7 +214,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
-  m_LocalScale: {x: 0.87, y: 1, z: 1}
+  m_LocalScale: {x: 0.84, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -270,15 +270,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   majorDimension: 11
   minorDimension: 9
-  minorSize: 2
+  minorSize: 1.5
   majorRepeatChance: 30
   minorRepeatChance: 0
   wallPrefab: {fileID: 7468147978922391709, guid: 6c2849fb20642df419ce35c69dcece12,
     type: 3}
   pathPrefab: {fileID: 3913325197193082611, guid: c3c1e5d4649bdf549ad94e4f26829a7f,
     type: 3}
-  tx1: {fileID: 2800000, guid: 205509918de1f624794c16e25f13c940, type: 3}
-  tx2: {fileID: 2800000, guid: 4603ceeacba088942ba0a94a495e40a7, type: 3}
+  majorWallPrefab: {fileID: 6906766744016340872, guid: d3e0d59aea1ff7e41ad7cd0ff67f3958,
+    type: 3}
 --- !u!4 &768349292
 Transform:
   m_ObjectHideFlags: 0

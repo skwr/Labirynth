@@ -31,10 +31,9 @@ public class Labirynth : MonoBehaviour, ITrigger
     int minorRepeatChance;
 
     [SerializeField]
-    GameObject wallPrefab, pathPrefab;
+    GameObject wallPrefab, pathPrefab, majorWallPrefab;
 
-    [SerializeField]
-    Texture2D tx1, tx2;
+    
 
     bool generatingDone = false;
 
@@ -363,6 +362,16 @@ public class Labirynth : MonoBehaviour, ITrigger
         {
             for (int x1 = 0; x1 < majorDimension; x1++)
             {
+                if(grid[x1, y1].type == LabirynthCell.TYPE.WALL)
+                {
+                    GameObject majorWall = Instantiate(majorWallPrefab, transform);
+                    majorWall.transform.localPosition = new Vector3(x1 * minorDimension * minorSize + ((minorDimension * minorSize) / 2) - (minorSize / 2), y1 * minorDimension * minorSize + ((minorDimension * minorSize) / 2) - (minorSize / 2), 0);
+                    majorWall.transform.localScale = new Vector3(minorDimension * minorSize, minorDimension * minorSize, 1);
+                    MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+                    majorWall.GetComponent<SpriteRenderer>().GetPropertyBlock(mpb);
+                    mpb.SetFloat("Vector1_A3318CCE", minorDimension);
+                    majorWall.GetComponent<SpriteRenderer>().SetPropertyBlock(mpb);
+                }
                 for (int y2 = 0; y2 < minorDimension; y2++)
                 {
                     for (int x2 = 0; x2 < minorDimension; x2++)
