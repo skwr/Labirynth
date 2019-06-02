@@ -48,11 +48,11 @@ public class PlayerMovement : MonoBehaviour
         rigid.velocity = new Vector2(maxVel * dir.x, 0);
         if(dir.x > 0)
         {
-            transform.rotation = Quaternion.Euler(new Vector2(0, 180));
+            transform.rotation = Quaternion.Euler(Vector2.zero);
         }
         else
         {
-            transform.rotation = Quaternion.Euler(Vector2.zero);
+            transform.rotation = Quaternion.Euler(new Vector2(0, 180));
         }
     }
 }
