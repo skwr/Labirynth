@@ -58,6 +58,7 @@ public class InputMenager : MonoBehaviour
         if (Input.GetButtonDown("LeftButton"))
         {
             Debug.Log("LeftButton pressed");
+            eventMenager.leftButtonPressedEvent.Invoke();
         }
 
         if (Input.GetButtonDown("RightButton"))

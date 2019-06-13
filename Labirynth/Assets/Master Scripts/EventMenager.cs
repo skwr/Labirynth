@@ -12,6 +12,7 @@ public class EventMenager : MonoBehaviour
 {
     public EventWithVector leftAnalogEvent;
     public EventWithVector rightAnalogEvent;
+    public UnityEvent leftButtonPressedEvent;
 
 
     // Start is called before the first frame update
@@ -19,6 +20,8 @@ public class EventMenager : MonoBehaviour
     {
         leftAnalogEvent = new EventWithVector();
         rightAnalogEvent = new EventWithVector();
+
+        leftButtonPressedEvent = new UnityEvent();
     }
 
     
